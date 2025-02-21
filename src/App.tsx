@@ -40,7 +40,9 @@ const mockAlerts: Alert[] = [];
 
 function App() {
   const [alerts, setAlerts] = useState<Alert[]>(mockAlerts);
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee>(mockEmployees[0]);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee>(
+    mockEmployees[0]
+  );
 
   const handleSOS = () => {
     const newAlert: Alert = {
@@ -55,7 +57,9 @@ function App() {
 
   const handleResolveAlert = (alertId: string) => {
     setAlerts((prev) =>
-      prev.map((alert) => (alert.id === alertId ? { ...alert, status: "resolved" } : alert))
+      prev.map((alert) =>
+        alert.id === alertId ? { ...alert, status: "resolved" } : alert
+      )
     );
   };
 
@@ -72,7 +76,9 @@ function App() {
                 <select
                   className="border p-2 rounded"
                   onChange={(e) => {
-                    const employee = mockEmployees.find((emp) => emp.id === e.target.value);
+                    const employee = mockEmployees.find(
+                      (emp) => emp.id === e.target.value
+                    );
                     if (employee) setSelectedEmployee(employee);
                   }}
                   value={selectedEmployee.id}
@@ -90,21 +96,17 @@ function App() {
           />
 
           {/* User Dashboard */}
-          <Route
-            path="user"
-            element={
-              <div className="container mx-auto px-4 py-8">
-                <UserDashboard user={selectedEmployee} onSOS={handleSOS} />
-              </div>
-            }
-          />
 
           {/* Admin Dashboard */}
           <Route
             path="admin"
             element={
               <div className="container mx-auto px-4 py-8">
-                <AdminDashboard alerts={alerts} employees={mockEmployees} onResolveAlert={handleResolveAlert} />
+                <AdminDashboard
+                  alerts={alerts}
+                  employees={mockEmployees}
+                  onResolveAlert={handleResolveAlert}
+                />
               </div>
             }
           />
@@ -119,6 +121,14 @@ function App() {
             }
           />
         </Route>
+        <Route
+          path="user"
+          element={
+            <div className="container mx-auto px-4 py-8">
+              <UserDashboard user={selectedEmployee} onSOS={handleSOS} />
+            </div>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
