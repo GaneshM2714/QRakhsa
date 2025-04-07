@@ -30,8 +30,8 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ user: initialUser }) => {
         const userData = await response.json();
         setUpdatedUser(userData);
 
-        // Generate a link to the user profile page using localhost
-        const userProfileLink = `https://qrakhsa-frontend.onrender.com/user-profile/${userId}`; // Adjust the port if necessary
+        // Generate a link to the user profile page using the user's ID
+        const userProfileLink = `https://qrakhsa-frontend.onrender.com/user-profile/${userId}`;
         setQrData(userProfileLink);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -83,22 +83,23 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ user: initialUser }) => {
       const updatedData = await response.json();
       setUpdatedUser(updatedData.employee);
       setIsEditing(false);
-      generateUpdatedQR();
+      // generateUpdatedQR(); // Consider if this is needed here
+      // The QR code will automatically update on the next render due to the useEffect dependency on userId
     } catch (error) {
       console.error("Error updating user data:", error);
     }
   };
 
-  const generateUpdatedQR = () => {
-    try {
-      // Generate a link to the user profile page using localhost
-      const userProfileLink = `https://qrakhsa-frontend.onrender.com/user-profile/${userId}`; // Adjust the port if necessary
-      setQrData(userProfileLink);
-      setQrError(null); // Clear any previous errors
-    } catch (error) {
-      setQrError("Failed to generate QR code: Data too large.");
-    }
-  };
+  // const generateUpdatedQR = () => {
+  //   try {
+  //     // Generate a link to the user profile page using the user's ID
+  //     const userProfileLink = `https://qrakhsa-frontend.onrender.com/user-profile/${userId}`;
+  //     setQrData(userProfileLink);
+  //     setQrError(null);
+  //   } catch (error) {
+  //     setQrError("Failed to generate QR code: Data too large.");
+  //   }
+  // };
 
   const downloadHighResQR = () => {
     if (qrRef.current) {
@@ -187,31 +188,31 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ user: initialUser }) => {
               <div>
                 <label className="block text-gray-700 dark:text-gray-300">Emergency Contacts</label>
                 {updatedUser.emergencyContacts.map((contact, index) => (
-                <div key={index} className="space-y-2">
-                  <input
-                    type="text"
-                    value={contact.name}
-                    onChange={(e) => handleEmergencyContactChange(index, "name", e.target.value)}
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Name"
-                  />
-                  {/* Add this input field for relationship */}
-                  <input
-                    type="text"
-                    value={contact.relationship || ""}
-                    onChange={(e) => handleEmergencyContactChange(index, "relationship", e.target.value)}
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Relationship"
-                  />
-                  <input
-                    type="text"
-                    value={contact.phone}
-                    onChange={(e) => handleEmergencyContactChange(index, "phone", e.target.value)}
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Phone"
-                  />
-                </div>
-              ))}
+                  <div key={index} className="space-y-2">
+                    <input
+                      type="text"
+                      value={contact.name}
+                      onChange={(e) => handleEmergencyContactChange(index, "name", e.target.value)}
+                      className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Name"
+                    />
+                    {/* Add this input field for relationship */}
+                    <input
+                      type="text"
+                      value={contact.relationship || ""}
+                      onChange={(e) => handleEmergencyContactChange(index, "relationship", e.target.value)}
+                      className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Relationship"
+                    />
+                    <input
+                      type="text"
+                      value={contact.phone}
+                      onChange={(e) => handleEmergencyContactChange(index, "phone", e.target.value)}
+                      className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Phone"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </>
