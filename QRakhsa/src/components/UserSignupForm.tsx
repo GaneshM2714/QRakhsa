@@ -65,25 +65,11 @@ const UserSignupForm: React.FC = () => {
         alert("Registration successful!");
         setSubmitted(true); // Set submitted to true to show the success message
 
-        // --- REMOVED QR CODE FETCHING LOGIC ---
-        // const employeeId = response.data.employee._id;
-        // try {
-        //   const qrResponse = await axios.get(
-        //     `http://localhost:5000/api/employees/${employeeId}`
-        //   );
-        //   if (qrResponse.status === 200 && qrResponse.data.qrCode) {
-        //     // setQrData(qrResponse.data.qrCode); // No longer setting QR data here
-        //   } else {
-        //     alert("Failed to fetch QR code after registration.");
-        //     // setQrData(null);
-        //   }
-        // } catch (qrError: any) {
-        //   console.error("Error fetching QR code:", qrError);
-        //   alert("Error fetching QR code after registration.");
-        //   // setQrData(null);
-        // }
-        // --- END OF REMOVED LOGIC ---
+        // --- OPTIONAL: Log the generated employee ID for verification ---
+        console.log("Registered Employee ID:", response.data.employee._id);
 
+        // --- REMOVED QR CODE FETCHING LOGIC ---
+        // ...
       }
     } catch (error: any) {
       // Improved error handling slightly
@@ -94,7 +80,7 @@ const UserSignupForm: React.FC = () => {
   };
 
   // --- REMOVED downloadHighResQR FUNCTION ---
-  // const downloadHighResQR = () => { ... };
+  // ...
 
   return (
     <div className="max-w-lg mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
@@ -127,7 +113,7 @@ const UserSignupForm: React.FC = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-               className="w-full border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               placeholder="Enter your username"
               required
             />
@@ -141,7 +127,7 @@ const UserSignupForm: React.FC = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-               className="w-full border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               placeholder="Enter your password"
               required
             />
@@ -155,7 +141,7 @@ const UserSignupForm: React.FC = () => {
               type="text"
               value={department}
               onChange={(e) => setDepartment(e.target.value)}
-               className="w-full border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               placeholder="Enter your department"
               required
             />
@@ -169,7 +155,7 @@ const UserSignupForm: React.FC = () => {
               type="text"
               value={bloodType}
               onChange={(e) => setBloodType(e.target.value)}
-               className="w-full border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               placeholder="Enter your blood type"
               required
             />
@@ -183,7 +169,7 @@ const UserSignupForm: React.FC = () => {
               type="text"
               value={medicalConditions}
               onChange={(e) => setMedicalConditions(e.target.value)}
-               className="w-full border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               placeholder="e.g., Asthma, Diabetes (comma-separated)"
             />
           </div>
@@ -193,8 +179,8 @@ const UserSignupForm: React.FC = () => {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Emergency Contacts (Optional)
             </label>
-             {/* Display existing contacts */}
-             <ul className="mb-2 space-y-1">
+            {/* Display existing contacts */}
+            <ul className="mb-2 space-y-1">
               {emergencyContacts.map((contact, index) => (
                 <li key={index} className="text-sm text-gray-600 dark:text-gray-400">
                   {contact.name} - {contact.phone}
@@ -206,14 +192,14 @@ const UserSignupForm: React.FC = () => {
                 type="text"
                 value={newContactName}
                 onChange={(e) => setNewContactName(e.target.value)}
-                 className="border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none flex-1"
+                className="border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none flex-1"
                 placeholder="Contact Name"
               />
               <input
                 type="tel" // Use type="tel" for phone numbers
                 value={newContactPhone}
                 onChange={(e) => setNewContactPhone(e.target.value)}
-                 className="border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none flex-1"
+                className="border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none flex-1"
                 placeholder="Contact Phone"
               />
               <button
@@ -244,10 +230,10 @@ const UserSignupForm: React.FC = () => {
           <p className="text-gray-600 dark:text-gray-300 mt-2">
             Thank you for registering. Please log in to your account to view and download your QR code.
           </p>
-           {/* Optionally add a link to the login page */}
-           {/* <a href="/login" className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-150 ease-in-out">
-             Go to Login
-           </a> */}
+          {/* Optionally add a link to the login page */}
+          {/* <a href="/login" className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-150 ease-in-out">
+            Go to Login
+          </a> */}
         </div>
         // --- END OF MODIFIED SUCCESS MESSAGE ---
       )}
